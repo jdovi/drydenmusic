@@ -15,6 +15,8 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+#Set the env
+DJANGO_ENV = os.environ.get('DJANGO_ENV') or 'development'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -92,7 +94,6 @@ if DJANGO_ENV == 'development':
                     'PORT': PORT},}
 else:
     import dj_database_url
-    DATABASES = {}
     DATABASES['default'] =  dj_database_url.config()
 
 

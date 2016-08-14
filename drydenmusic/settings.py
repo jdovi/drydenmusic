@@ -94,6 +94,7 @@ if DJANGO_ENV == 'development':
                     'PORT': PORT},}
 else:
     import dj_database_url
+    DATABASES = {}
     DATABASES['default'] =  dj_database_url.config()
 
 
