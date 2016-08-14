@@ -1,1 +1,2 @@
-web: run-program /app/.heroku/miniconda/envs/condaenv/bin/gunicorn drydenmusic.wsgi
+web: /app/.heroku/miniconda/envs/condaenv/bin/gunicorn drydenmusic.wsgi
+
