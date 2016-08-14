@@ -6,15 +6,24 @@ cloning the code
 git clone https://github.com/jdovi/drydenmusic.git
 
 setting up remotes
+git remote rm origin
 git remote add heroku-dm https://git.heroku.com/drydenmusic.git
 git remote add github-dm https://github.com/jdovi/drydenmusic.git
 
 conda install --file conda-requirements.txt --yes
 pip install -r requirements.txt
 
-
+Create the db locally
 sudo -u postgres createdb drydenmusic
 
-
+Create the env variable for the database
 export DRYDENMUSICDB=drydenmusic
+
+Setting up the db on heroku for the first time
+heroku addons:create heroku-postgresql:hobby-dev
+heroku run python manage.py createsuperuser --app drydenmusic
+
+
+
+
 
