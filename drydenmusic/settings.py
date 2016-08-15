@@ -9,14 +9,27 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+import os, django
 
 #Set the env
 DJANGO_ENV = os.environ.get('DJANGO_ENV') or 'development'
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# calculated paths for django and the site
+# used as starting points for various other paths
+DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+PROJECT_DIR = os.path.dirname(__file__)
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+if DJANGO_ENV == 'production':
+    BASE_URL = 'app.buildingspeak.com'
+    PROTOCOL = 'http'
+elif DJANGO_ENV == 'staging':
+    BASE_URL = 'buildingspeak-staging-c14.herokuapp.com'
+    PROTOCOL = 'http'
+else:
+    BASE_URL = '127.0.0.1:8000'
+    PROTOCOL = 'http'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -39,6 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -112,7 +126,52 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
+if DJANGO_ENV == 'development':
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage' #need S3 for file_upload function
+    #STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+else:
+    # Always use S3 on staging/production
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY') 
+AWS_STORAGE_BUCKET_NAME = os.environ.get('DRYDENMUSIC_S3BUCKET')
+AWS_PRELOAD_METADATA = True
 
-STATIC_URL = '/static/'
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/home/media/media.lawrence.com/static/"
+if DJANGO_ENV == 'development':
+    # Won't generally collect locally, but if we do, collect to here
+    STATIC_ROOT = '%s/staticfiles/' % SITE_ROOT
+else:
+    STATIC_ROOT = '%s/staticfiles/' % SITE_ROOT
+    
+# URL prefix for static files.
+# Example: "http://media.lawrence.com/static/"
+if DJANGO_ENV == 'development':
+    # Use this to at least pull css/js/etc. from local folder when no internet available
+    #STATIC_URL = '/static/'
+    
+    #however, need to use the S3 line when creating new customers and need file_upload function
+    STATIC_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+else:
+    STATIC_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+    
+# Additional locations of static files
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_PATH, 'static'),
+)
+
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+

@@ -23,7 +23,8 @@ Setting up the db on heroku for the first time
 heroku addons:create heroku-postgresql:hobby-dev
 heroku run python manage.py createsuperuser --app drydenmusic
 
-
+Static files
+export DRYDENMUSIC_S3BUCKET=drydenmusic
 
 
 
