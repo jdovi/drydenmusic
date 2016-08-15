@@ -31,6 +31,9 @@ else:
     BASE_URL = '127.0.0.1:8000'
     PROTOCOL = 'http'
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -52,7 +55,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'storages'
+    'storages',
+    'DrydenMusicApp'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -117,7 +121,7 @@ else:
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Eastern'
 
 USE_I18N = True
 
@@ -125,6 +129,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+if DJANGO_ENV == 'production':
+    DEBUG = False
+else:
+    DEBUG = True
 
 if DJANGO_ENV == 'development':
     STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage' #need S3 for file_upload function
