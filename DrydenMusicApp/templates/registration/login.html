@@ -1,3 +1,6 @@
+{% extends "DrydenMusicApp/base.html" %}
+
+{% block content %}
 
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
@@ -17,5 +20,7 @@
 </table>
 
 <input type="submit" value="login" class="pure-button pure-button-primary"/>
-<input type="hidden" name="next" value="{{ next }}" />
+<input type="hidden" name="next" value="/music/" />
 </form>
+
+{% endblock %}

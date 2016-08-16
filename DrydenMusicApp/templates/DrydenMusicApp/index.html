@@ -1,3 +1,7 @@
+{% extends "DrydenMusicApp/base.html" %}
+
+{% block content %}
+
 {% if latest_music_list %}
     <ul>
     {% for music in latest_music_list %}
@@ -7,3 +11,5 @@
 {% else %}
     <p>No songs are available.</p>
 {% endif %}
+
+{% endblock %}
