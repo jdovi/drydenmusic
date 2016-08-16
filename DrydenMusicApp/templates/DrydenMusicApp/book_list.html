@@ -1,0 +1,9 @@
+{% extends "DrydenMusicApp/base.html" %}
+
+{% block content %}
+<ul>
+{% for book in book_list %}
+<li>{{ book.title }}</li>
+{% endfor %}
+</ul>
+{% endblock %}

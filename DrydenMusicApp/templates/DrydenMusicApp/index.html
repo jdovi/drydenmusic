@@ -2,14 +2,31 @@
 
 {% block content %}
 
-{% if latest_music_list %}
-    <ul>
-    {% for music in latest_music_list %}
-        <li><a href="{{ music.music_file.url }}">{{ music.title }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No songs are available.</p>
-{% endif %}
+<div class="pure-g">
+    <div class="pure-u-1-2">
+        <h2>Latest Song Sheets</h2>
+        {% if latest_music_list %}
+            <ul>
+            {% for music in latest_music_list %}
+                <li><a href="{{ music.music_file.url }}">{{ music.title }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No songs are available.</p>
+        {% endif %}
+    </div>
+    <div class="pure-u-1-2">
+        <h2>Latest Song Books</h2>
+        {% if latest_book_list %}
+            <ul>
+            {% for book in latest_book_list %}
+                <li><a href="{{ music.music_file.url }}">{{ music.title }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No songs are available.</p>
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %}
