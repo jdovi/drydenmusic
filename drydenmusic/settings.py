@@ -22,10 +22,10 @@ SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 PROJECT_DIR = os.path.dirname(__file__)
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 if DJANGO_ENV == 'production':
-    BASE_URL = 'app.buildingspeak.com'
+    BASE_URL = 'drydenmusic.herokuapp.com'
     PROTOCOL = 'http'
 elif DJANGO_ENV == 'staging':
-    BASE_URL = 'buildingspeak-staging-c14.herokuapp.com'
+    BASE_URL = 'drydenmusic.herokuapp.com'
     PROTOCOL = 'http'
 else:
     BASE_URL = '127.0.0.1:8000'
@@ -41,7 +41,6 @@ LOGIN_REDIRECT_URL = '/'
 SECRET_KEY = '=7@ajiv)=xv=ho-7%f0k0@vpdl73%e-$$l)u6$i@%n8kl6l$_0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
