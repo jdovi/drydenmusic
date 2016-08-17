@@ -19,7 +19,7 @@
         <h2>Latest Song Books</h2>
         {% if latest_book_list %}
             <ul>
-            {% for book in latest_book_list %}
+            {% for music in latest_book_list %}
                 <li><a href="{{ music.music_file.url }}">{{ music.title }}</a></li>
             {% endfor %}
             </ul>

@@ -1,9 +1,21 @@
 {% extends "DrydenMusicApp/base.html" %}
 
 {% block content %}
-<ul>
-{% for book in book_list %}
-<li>{{ book.title }}</li>
-{% endfor %}
-</ul>
+        <h2>Latest Song Books</h2>
+        {% if book_list %}
+            <table class="pure-table pure-table-horizontal">
+                <thead>
+                    <tr>
+                        <th>Song Book</th>
+                    </tr>
+                </thead>
+            {% for music in book_list %}
+                <tr>
+                    <td><a href="{{ music.music_file.url }}">{{ music.title }}</a></td>
+                </tr>
+            {% endfor %}
+            </table>
+        {% else %}
+            <p>No songs are available.</p>
+        {% endif %}
 {% endblock %}

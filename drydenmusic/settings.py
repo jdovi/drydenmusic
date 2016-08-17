@@ -184,3 +184,31 @@ STATICFILES_FINDERS = (
     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+# Mail configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+SERVER_EMAIL = 'admin@drydenmusic.com'
+DEFAULT_FROM_EMAIL = 'admin@drydenmusic.com'
+EMAIL_TEMPLATE = os.environ.get('EMAIL_TEMPLATE') or 'sample-template'
+BUILDINGSPEAK_EMAIL_USERNAME = os.environ.get('BUILDINGSPEAK_EMAIL_USERNAME')
+BUILDINGSPEAK_EMAIL_PASSWORD = os.environ.get('BUILDINGSPEAK_EMAIL_PASSWORD')
+
+if DJANGO_ENV == 'development':
+  """
+  EMAIL_HOST = 'localhost'
+  EMAIL_PORT = os.environ.get('EMAIL_PORT') or 1025
+  EMAIL_HOST_USER = ''
+  EMAIL_HOST_PASSWORD = ''
+  EMAIL_PROVIDER = 'localhost'
+  """
+  EMAIL_HOST = 'smtp.sendgrid.net'
+  EMAIL_PORT = 587
+  EMAIL_HOST_USER = BUILDINGSPEAK_EMAIL_USERNAME
+  EMAIL_HOST_PASSWORD = BUILDINGSPEAK_EMAIL_PASSWORD
+  EMAIL_PROVIDER = 'sendgrid'
+  
+else:
+  EMAIL_HOST = 'smtp.sendgrid.net'
+  EMAIL_PORT = 587
+  EMAIL_HOST_USER = BUILDINGSPEAK_EMAIL_USERNAME
+  EMAIL_HOST_PASSWORD = BUILDINGSPEAK_EMAIL_PASSWORD
+  EMAIL_PROVIDER = 'sendgrid'

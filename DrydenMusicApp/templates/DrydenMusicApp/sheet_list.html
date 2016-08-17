@@ -1,9 +1,25 @@
 {% extends "DrydenMusicApp/base.html" %}
 
 {% block content %}
-<ul>
-{% for sheet in sheet_list %}
-<li>{{ sheet.title }}</li>
-{% endfor %}
-</ul>
+        <h2>Song Sheets</h2>
+        {% if sheet_list %}
+            <table class="pure-table pure-table-horizontal sortable">
+                <thead>
+                    <tr>
+                        <th>Song Title</th>
+                        <th>First Line</th>
+                    </tr>
+                </thead>
+                <tbody>
+            {% for music in sheet_list %}
+                    <tr>
+                        <td><a href="{{ music.music_file.url }}">{{ music.title }}</a></td>
+                        <td>{{ music.first_line }}</td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+        {% else %}
+            <p>No songs are available.</p>
+        {% endif %}
 {% endblock %}

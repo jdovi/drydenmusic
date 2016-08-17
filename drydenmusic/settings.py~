@@ -42,7 +42,9 @@ SECRET_KEY = '=7@ajiv)=xv=ho-7%f0k0@vpdl73%e-$$l)u6$i@%n8kl6l$_0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.app.drydenmusic.com',
+                     '.drydenmusic.herokuapp.com',
+                     ]
 
 
 # Application definition
@@ -182,3 +184,29 @@ STATICFILES_FINDERS = (
     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+# Mail configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+SERVER_EMAIL = 'admin@drydenmusic.com'
+DEFAULT_FROM_EMAIL = 'admin@drydenmusic.com'
+EMAIL_TEMPLATE = os.environ.get('EMAIL_TEMPLATE') or 'sample-template'
+
+if DJANGO_ENV == 'development':
+  """
+  EMAIL_HOST = 'localhost'
+  EMAIL_PORT = os.environ.get('EMAIL_PORT') or 1025
+  EMAIL_HOST_USER = ''
+  EMAIL_HOST_PASSWORD = ''
+  EMAIL_PROVIDER = 'localhost'
+  """
+  EMAIL_HOST = 'smtp.sendgrid.net'
+  EMAIL_PORT = 587
+  EMAIL_HOST_USER = BUILDINGSPEAK_EMAIL_USERNAME
+  EMAIL_HOST_PASSWORD = BUILDINGSPEAK_EMAIL_PASSWORD
+  EMAIL_PROVIDER = 'sendgrid'
+  
+else:
+  EMAIL_HOST = 'smtp.sendgrid.net'
+  EMAIL_PORT = 587
+  EMAIL_HOST_USER = BUILDINGSPEAK_EMAIL_USERNAME
+  EMAIL_HOST_PASSWORD = BUILDINGSPEAK_EMAIL_PASSWORD
+  EMAIL_PROVIDER = 'sendgrid'

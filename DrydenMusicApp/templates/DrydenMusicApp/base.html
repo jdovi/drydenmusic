@@ -13,6 +13,13 @@
 
 <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 <link rel="stylesheet" href="https://s3.amazonaws.com/drydenmusic/CSS/side-menu.css">
+<script src="https://s3.amazonaws.com/drydenmusic/js/sorttable.js"></script>
+<script src="https://s3.amazonaws.com/drydenmusic/js/ui.js"></script>
+<style>
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: " \25B4\25BE" 
+}
+</style>
 
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="css/layouts/side-menu-old-ie.css">
@@ -20,7 +27,7 @@
     <!--[if gt IE 8]><!-->
         <link rel="stylesheet" href="css/layouts/side-menu.css">
     <!--<![endif]-->
-        <title>{% block title %}Dovi Motors Reporting{% endblock %}</title>
+        <title>{% block title %}Dryden House Church{% endblock %}</title>
     </head>
     <body>
     <div id="layout">
@@ -50,9 +57,25 @@
                     </div>
                 </div>
                 <div class="content">{% block content %}{% endblock %}</div>
-                <div class="footer">Copyright 2016 Jesse Dovi.  All rights reserved.</div>
+                <div class="footer">Website copyright 2016 Jesse Dovi.  All rights reserved.  Music should only be used by permission.  I don't pay CCLI.</div>
             </div>
         </div>
     </div>
     </body>
+<script>
+function sortTable(table, col, reverse) {
+    var tb = table.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
+        tr = Array.prototype.slice.call(tb.rows, 0), // put rows into array
+        i;
+    reverse = -((+reverse) || -1);
+    tr = tr.sort(function (a, b) { // sort rows
+        return reverse // `-1 *` if want opposite order
+            * (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+                .localeCompare(b.cells[col].textContent.trim())
+               );
+    });
+    for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+}
+// sortTable(tableNode, columId, false);
+</script>
 </html>
