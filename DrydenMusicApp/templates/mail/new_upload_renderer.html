@@ -1,6 +1,15 @@
-<html>
-<head></head>
-<body>
-This is an email.
-</body>
-</html>
+{% extends "mail/email_base.html" %} 
+
+{% block title %}{{ headline }}{% endblock %}
+{% block preview %}{{ headline }}{% endblock %}
+{% block heading %}{{headline }}{% endblock %}
+{% block subheading %}Use the links below to download the latest music!{% endblock %}
+
+
+{% block content %} 
+<ul>
+{% for link in link_list %}
+<li><a href={{ link.url }}>{{ link.title }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
