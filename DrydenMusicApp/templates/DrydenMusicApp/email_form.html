@@ -1,6 +1,11 @@
 {% extends "DrydenMusicApp/base.html" %}
 
 {% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="pure-button pure-button-primary">{{message }}</div>
+        {% endfor %}
+    {% endif %}
 {% if form %}
     <form method='post'>
         {% csrf_token %}

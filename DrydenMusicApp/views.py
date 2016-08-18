@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as lgout
-from django.shortcuts import render
+from django.contrib import messages
+from django.core.management import call_command
+from django.shortcuts import render, HttpResponseRedirect
 from .models import music
 from .forms import EmailForm
 
@@ -43,9 +45,12 @@ def email(request):
         if form.is_valid():
             song_list = form.cleaned_data.get('song_list')
             email_list = form.cleaned_data.get('email_list')
-            context = {'song_list':song_list,
-                        'email_list':email_list}
-            return render(request, 'DrydenMusicApp/email_form.html',context)
+            try:
+                call_command('SendEmail', 'email_songs', song_list, email_list)
+                messages.success(request, 'The selected songs have been emailed.')
+            except:
+                messages.error(request, 'Email delivery failed.')
+            return HttpResponseRedirect('/music/email/')
     else:
         form = EmailForm
 

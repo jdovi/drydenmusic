@@ -9,8 +9,8 @@ from DrydenMusicApp.management.commands import SendEmail_Base
 from DrydenMusicApp.models import music
 import pdb
 
-#python manage.py   SendEmail     content_id    music_id_list
-#                 (mgt command)   (various)     (a comma sep list of integers)
+#python manage.py   SendEmail     content_id    music_id_list                   Email address list
+#                 (mgt command)   (various)     (a python list of integers)  (a python list of emails)
 
 
 class Command(BaseCommand):
@@ -25,8 +25,8 @@ class Command(BaseCommand):
         #capture content_id which will indicate which piece of functionality we're after
         content_id = options['content_id']
          
-        music_id_list = options['music_id_list'].split(',')
-        to_email_list = options['to_email_list'].split(',')
+        music_id_list = options['music_id_list']
+        to_email_list = options['to_email_list']
         list_count = len(music_id_list)
         
         #make a list of dictionaries of the title / link that needs to be sent
