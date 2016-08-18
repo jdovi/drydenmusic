@@ -146,6 +146,12 @@ AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY') 
 AWS_STORAGE_BUCKET_NAME = os.environ.get('DRYDENMUSIC_S3BUCKET')
 AWS_PRELOAD_METADATA = True
+from datetime import date, timedelta
+tenyrs = date.today() + timedelta(days=365*10)
+# Expires 10 years in the future at 8PM GMT
+AWS_HEADERS = {
+    'Expires': tenyrs.strftime('%a, %d %b %Y 20:00:00 GMT')
+}
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -189,6 +195,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 SERVER_EMAIL = 'admin@drydenmusic.com'
 DEFAULT_FROM_EMAIL = 'admin@drydenmusic.com'
 EMAIL_TEMPLATE = os.environ.get('EMAIL_TEMPLATE') or 'sample-template'
+BUILDINGSPEAK_EMAIL_USERNAME = os.environ.get('BUILDINGSPEAK_EMAIL_USERNAME')
+BUILDINGSPEAK_EMAIL_PASSWORD = os.environ.get('BUILDINGSPEAK_EMAIL_PASSWORD')
 
 if DJANGO_ENV == 'development':
   """

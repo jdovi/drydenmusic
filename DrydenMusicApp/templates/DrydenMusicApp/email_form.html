@@ -1,0 +1,15 @@
+{% extends "DrydenMusicApp/base.html" %}
+
+{% block content %}
+{% if form %}
+    <form method='post'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type='submit' value='submit'>
+    </form>
+{% else %}
+    sent list of songs<br>
+    {{ song_list }}<br>
+    {{ email_list }}
+{% endif %}
+{% endblock %}

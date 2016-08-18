@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as lgout
 from django.shortcuts import render
 from .models import music
+from .forms import EmailForm
 
 # Create your views here.
 @login_required
@@ -20,19 +21,36 @@ def index(request):
             'latest_book_list': latest_book_list,
         }
     return render(request, 'DrydenMusicApp/index.html', context)
-    
+
+@login_required    
 def sheet_list(request):
     l = music.objects.filter(file_type=1)
     l = l.order_by('title')
     context = {'sheet_list':l}
     return render(request, 'DrydenMusicApp/sheet_list.html', context)
-    
+
+@login_required    
 def book_list(request):
     l = music.objects.filter(file_type=2)
     l = l.order_by('title')
     context = {'book_list':l}
     return render(request, 'DrydenMusicApp/book_list.html', context)
-    
+
+@login_required    
+def email(request):
+    if request.method == 'POST':
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            song_list = form.cleaned_data.get('song_list')
+            email_list = form.cleaned_data.get('email_list')
+            context = {'song_list':song_list,
+                        'email_list':email_list}
+            return render(request, 'DrydenMusicApp/email_form.html',context)
+    else:
+        form = EmailForm
+
+    return render(request, 'DrydenMusicApp/email_form.html', {'form':form })
+        
 def logout(request):
     lgout(request)
     return render(request,'registration/logout.html')

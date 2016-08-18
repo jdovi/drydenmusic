@@ -17,7 +17,7 @@ class music(models.Model):
                             ]    
     
     music_file = models.FileField(null=True, blank=True, upload_to=data_file_path, 
-                    storage=S3BotoStorage(location='music_files', acl='private'),
+                    storage=S3BotoStorage(location='music_files'),
                     help_text='')
     file_type = models.IntegerField(null=False, choices=FILE_TYPE_CHOICES, default=1)               
     title = models.CharField(blank=True, max_length=200)

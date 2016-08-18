@@ -146,6 +146,13 @@ AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY') 
 AWS_STORAGE_BUCKET_NAME = os.environ.get('DRYDENMUSIC_S3BUCKET')
 AWS_PRELOAD_METADATA = True
+from datetime import date, timedelta
+tenyrs = date.today() + timedelta(days=365*10)
+# Expires 10 years in the future at 8PM GMT
+AWS_HEADERS = {
+    'Expires': tenyrs.strftime('%a, %d %b %Y 20:00:00 GMT')
+}
+AWS_QUERYSTRING_AUTH = False
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
