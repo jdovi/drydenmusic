@@ -4,7 +4,8 @@ from django.contrib import messages
 from django.core.management import call_command
 from django.shortcuts import render, HttpResponseRedirect
 from .models import music
-from .forms import EmailForm
+from .forms import EmailForm, UploadForm
+import pdb
 
 # Create your views here.
 @login_required
@@ -59,3 +60,20 @@ def email(request):
 def logout(request):
     lgout(request)
     return render(request,'registration/logout.html')
+    
+@login_required    
+def upload(request):
+    if request.method == 'POST':
+        form = UploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data.get('title')
+            try:
+                form.save()
+                messages.success(request, '%s has been added successfully' % title)
+            except:
+                messages.error(request, 'There was and error uploading.')
+            return HttpResponseRedirect('/music/upload/')
+    else:
+        form = UploadForm
+
+    return render(request, 'DrydenMusicApp/upload_form.html', {'form':form })

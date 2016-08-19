@@ -1,7 +1,7 @@
 {% extends "DrydenMusicApp/base.html" %}
-
+{% block header %}Songs Books{% endblock %}
 {% block content %}
-        <h2>Latest Song Books</h2>
+        Song books contain multiple songs in 1 PDF file.
         {% if book_list %}
             <table class="pure-table pure-table-horizontal">
                 <thead>

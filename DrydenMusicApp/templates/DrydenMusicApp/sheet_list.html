@@ -1,7 +1,8 @@
 {% extends "DrydenMusicApp/base.html" %}
-
+{% block header %}Song Sheets{% endblock %}
 {% block content %}
-        <h2>Song Sheets</h2>
+
+        Sort by clicking the arrows next to each heading
         {% if sheet_list %}
             <table class="pure-table pure-table-horizontal sortable">
                 <thead>

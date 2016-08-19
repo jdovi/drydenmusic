@@ -26,5 +26,7 @@ heroku run python manage.py createsuperuser --app drydenmusic
 Static files
 export DRYDENMUSIC_S3BUCKET=drydenmusic
 
-
+heroku pg:backups capture --app drydenmusic
+heroku pg:backups public-url b0XX --app drydenmusic
+pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d drydenmusic ../Downloads/b0XX
 

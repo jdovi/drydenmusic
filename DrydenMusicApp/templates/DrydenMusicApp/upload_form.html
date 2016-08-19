@@ -1,0 +1,41 @@
+{% extends "DrydenMusicApp/base.html" %}
+{% block header %}Upload Files{% endblock %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="pure-button pure-button-primary">{{message }}</div>
+        {% endfor %}
+    {% endif %}
+    <br>
+Use the form below to upload a new song.
+{% if form %}
+<form action="/music/upload/" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+    <table class="pure-table pure-table-horizontal">
+
+        <tbody>
+    
+            <tr>
+                <td>{{ form.title.label_tag }}</td>
+                <td>{{ form.title }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.first_line.label_tag }}</td>
+                <td>{{ form.first_line }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.music_file.label_tag }}</td>
+                <td>{{ form.music_file }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.file_type.label_tag }}</td>
+                <td>{{ form.file_type }}</td>
+            </tr>    
+    </tbody>
+    </table>
+<input type="submit" value="Submit" class="pure-button pure-button-primary" />
+</form>
+{% else %}
+    upload complete
+{% endif %}
+{% endblock %}
