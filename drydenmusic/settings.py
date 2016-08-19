@@ -44,6 +44,7 @@ SECRET_KEY = '=7@ajiv)=xv=ho-7%f0k0@vpdl73%e-$$l)u6$i@%n8kl6l$_0'
 
 ALLOWED_HOSTS = ['.app.drydenmusic.com',
                      '.drydenmusic.herokuapp.com',
+                     '.www.drydenmusic.com',
                      ]
 
 
