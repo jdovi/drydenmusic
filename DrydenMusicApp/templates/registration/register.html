@@ -1,0 +1,22 @@
+{% extends "DrydenMusicApp/base.html" %}
+{% block header %}Email Songs{% endblock %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="pure-button pure-button-primary">{{message }}</div>
+        {% endfor %}
+    {% endif %}
+Check the songs you want to send and the people you want to receive them.  Then hit send.
+{% if form %}
+<form method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Register" class="pure-button pure-button-primary"/>
+
+</form>
+{% else %}
+    sent list of songs<br>
+    {{ song_list }}<br>
+    {{ email_list }}
+{% endif %}
+{% endblock %}

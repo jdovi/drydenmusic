@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as lgout
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.core.management import call_command
 from django.shortcuts import render, HttpResponseRedirect
@@ -60,6 +61,18 @@ def email(request):
 def logout(request):
     lgout(request)
     return render(request,'registration/logout.html')
+    
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            return HttpResponseRedirect("/books/")
+    else:
+        form = UserCreationForm()
+    return render(request, "registration/register.html", {
+        'form': form,
+    })
     
 @login_required    
 def upload(request):
