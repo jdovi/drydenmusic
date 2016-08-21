@@ -16,10 +16,10 @@ class music(models.Model):
                             (2,'Songbook'),
                             ]    
     
-    music_file = models.FileField(null=True, blank=True, upload_to=data_file_path, 
+    music_file = models.FileField(null=True, upload_to=data_file_path, 
                     storage=S3BotoStorage(location='music_files'),
                     help_text='')
     file_type = models.IntegerField(null=False, choices=FILE_TYPE_CHOICES, default=1)               
     title = models.CharField(blank=True, max_length=200)
-    first_line = models.CharField(blank=True, max_length=200)
+    first_line = models.CharField(max_length=200)
     added = models.DateTimeField(auto_now_add=True)
