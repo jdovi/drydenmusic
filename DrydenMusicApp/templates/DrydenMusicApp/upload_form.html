@@ -17,19 +17,19 @@ Use the form below to upload a new song.
     
             <tr>
                 <td>{{ form.title.label_tag }}</td>
-                <td>{{ form.title }}</td>
+                <td>{{ form.title }}{{ form.title.errors }}</td>
             </tr>
             <tr>
                 <td>{{ form.first_line.label_tag }}</td>
-                <td>{{ form.first_line }}</td>
+                <td>{{ form.first_line }}{{ form.first_line.errors }}</td>
             </tr>
             <tr>
                 <td>{{ form.music_file.label_tag }}</td>
-                <td>{{ form.music_file }}</td>
+                <td>{{ form.music_file }}{{ form.music_file.errors }}</td>
             </tr>
             <tr>
                 <td>{{ form.file_type.label_tag }}</td>
-                <td>{{ form.file_type }}</td>
+                <td>{{ form.file_type }}{{ form.file_type.errors }}</td>
             </tr>    
     </tbody>
     </table>
