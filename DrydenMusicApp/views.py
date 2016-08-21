@@ -1,11 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as lgout
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.core.management import call_command
 from django.shortcuts import render, HttpResponseRedirect
 from .models import music
-from .forms import EmailForm, UploadForm
+from .forms import EmailForm, UploadForm, UserCreateForm
 import pdb
 
 # Create your views here.
@@ -62,15 +63,24 @@ def logout(request):
     lgout(request)
     return render(request,'registration/logout.html')
     
-def register(request):
+def registration(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserCreateForm(request.POST)
         if form.is_valid():
-            new_user = form.save()
-            return HttpResponseRedirect("/books/")
+            if User.objects.filter(username=form.cleaned_data['email']).exists():
+                message = 'There is already a user account with this email.'
+                context={'message': message,
+                            'form':form}
+                return render(request, 'registration/registration.html', context)
+            else:
+                email_list = ['jessedovi@gmail.com']
+                song_list = []
+                call_command('SendEmail', 'email_registration', song_list, email_list)
+                new_user = form.save()
+                return render(request, 'registration/registration_success.html',context={})
     else:
-        form = UserCreationForm()
-    return render(request, "registration/register.html", {
+        form = UserCreateForm()
+    return render(request, "registration/registration.html", {
         'form': form,
     })
     

@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from .models import music
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 import pdb
 
@@ -23,3 +24,18 @@ class UploadForm(ModelForm):
         model = music
         fields = ['title','first_line','music_file','file_type']
         
+class UserCreateForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ['email', 'first_name', 'last_name', 'password1', 'password2']
+
+    def save(self, commit=True):
+        user = super(UserCreateForm, self).save(commit=False)
+        user.email = self.cleaned_data["email"]
+        user.username = user.email
+        user.is_active = False
+        if commit:
+            user.save()
+        return user       

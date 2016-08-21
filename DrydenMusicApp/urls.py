@@ -8,5 +8,4 @@ urlpatterns = [
     url(r'^book_list/', views.book_list, name='book_list'),
     url(r'^email/', views.email, name='email'),
     url(r'^upload/', views.upload, name='upload'),
-    url(r'^register/', views.register, name='register')
 ]

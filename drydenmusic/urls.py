@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', authviews.login),
     url(r'^logout/$', views.logout,name="logout"),
+    url(r'^registration/$', views.registration,name="registration"),
     url(r'^$', lambda r: HttpResponseRedirect('music/'))
 ]

@@ -29,24 +29,36 @@ class Command(BaseCommand):
         to_email_list = options['to_email_list']
         list_count = len(music_id_list)
         
-        #make a list of dictionaries of the title / link that needs to be sent
-        link_list = []
-        for music_id in music_id_list:
-            for m in music.objects.filter(id=music_id):
-                link_list.append({'title':m.title,'url':m.music_file.url})
+        if content_id == 'email_songs':
+            #make a list of dictionaries of the title / link that needs to be sent
+            link_list = []
+            for music_id in music_id_list:
+                for m in music.objects.filter(id=music_id):
+                    link_list.append({'title':m.title,'url':m.music_file.url})
+            
+            
+            #add the email addresses to the To line
+            to = to_email_list
+            
+            #create the subject line
+            subject = '%s New music files available for download' % list_count
+            
+            #create the context variable
+            context = {'link_list':link_list,
+                        'headline':subject
+                    }
         
-        
-        #add the email addresses to the To line
-        to = to_email_list
-        
-        #create the subject line
-        subject = '%s New music files available for download' % list_count
-        
-        #create the context variable
-        context = {'link_list':link_list,
-                    'headline':subject
-                }
-        
+        elif content_id == 'email_registration':
+            #add the email addresses to the To line
+            to = to_email_list
+            
+            #create the subject line
+            subject = 'Drydenmusic.com there is a new user request that needs approval'
+            
+            #create the context variable
+            context = {'headline':subject,
+                        'message':subject
+                    }            
         #set the provider and create the HTML body
         EMAIL_PROVIDER = 'sendgrid'
         html_body = render_to_string('mail/new_upload_renderer.html', context)
