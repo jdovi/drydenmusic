@@ -21,9 +21,14 @@ def index(request):
     latest_book_list = music.objects.filter(file_type=2)
     latest_book_list = latest_book_list.order_by('-added')[:3]
     
+    #select the latest teachings
+    latest_teaching_list = music.objects.filter(file_type=3)
+    #latest_teaching_list = latest_book_list.order_by('-added')[:3]
+    
     #create the context variable
     context = {'latest_music_list': latest_music_list,
             'latest_book_list': latest_book_list,
+            'latest_teaching_list': latest_teaching_list,
         }
     return render(request, 'DrydenMusicApp/index.html', context)
 
@@ -96,6 +101,8 @@ def upload(request):
             except:
                 messages.error(request, 'There was and error uploading.')
             return HttpResponseRedirect('/music/upload/')
+        else:
+            status = 422 # signal error to UploadProgress
     else:
         form = UploadForm
 

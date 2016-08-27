@@ -6,4 +6,5 @@ from .models import music
 class MusicAdmin(admin.ModelAdmin):
     fields = ['title', 'first_line', 'music_file', 'file_type']
 
+
 admin.site.register(music, MusicAdmin)

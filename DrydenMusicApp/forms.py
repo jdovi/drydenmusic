@@ -22,7 +22,10 @@ class EmailForm(forms.Form):
 class UploadForm(ModelForm):
     class Meta:
         model = music
-        fields = ['title','first_line','music_file','file_type']
+        fields = ['title','music_file','file_type',
+                    'first_line','topic','scripture',
+                    'author_or_teacher','date_presented',
+                ]
         
 class UserCreateForm(UserCreationForm):
     email = forms.EmailField(required=True)

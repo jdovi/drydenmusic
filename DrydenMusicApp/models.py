@@ -14,6 +14,7 @@ class music(models.Model):
         
     FILE_TYPE_CHOICES = [(1,'Single Song Sheet'),
                             (2,'Songbook'),
+                            (3,'Teaching'),
                             ]    
     
     music_file = models.FileField(null=True, upload_to=data_file_path, 
@@ -21,5 +22,9 @@ class music(models.Model):
                     help_text='')
     file_type = models.IntegerField(null=False, choices=FILE_TYPE_CHOICES, default=1)               
     title = models.CharField(max_length=200)
-    first_line = models.CharField(blank=True, max_length=200)
+    first_line = models.CharField(blank=True, null=True, max_length=200)
+    topic = models.CharField(blank=True, null=True, max_length=200)
+    scripture = models.CharField(blank=True, null=True, max_length=200)
+    author_or_teacher = models.CharField(blank=True, null=True, max_length=200)
+    date_presented = models.DateField(blank=True,null=True)
     added = models.DateTimeField(auto_now_add=True)

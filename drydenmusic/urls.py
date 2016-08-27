@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^login/$', authviews.login),
     url(r'^logout/$', views.logout,name="logout"),
     url(r'^registration/$', views.registration,name="registration"),
-    url(r'^$', lambda r: HttpResponseRedirect('music/'))
+    url(r'^$', lambda r: HttpResponseRedirect('music/')),
 ]
