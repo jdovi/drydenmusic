@@ -1,0 +1,27 @@
+{% extends "DrydenMusicApp/base.html" %}
+{% block header %}Teachings{% endblock %}
+{% block content %}
+        Teachings
+        {% if teaching_list %}
+            <table class="pure-table pure-table-horizontal sortable">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Date Presented</th>
+                        <th>Teacher</th>
+                        <th>Scripture</th>
+                    </tr>
+                </thead>
+            {% for music in teaching_list %}
+                <tr>
+                    <td><a href="{{ music.music_file.url }}">{{ music.title }}</a></td>
+                    <td>{{ music.date_presented }}</td>
+                    <td>{{ music.author_or_teacher }}</td>
+                    <td>{{ music.scripture }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        {% else %}
+            <p>No songs are available.</p>
+        {% endif %}
+{% endblock %}

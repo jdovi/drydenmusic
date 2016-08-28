@@ -6,7 +6,8 @@
             <div class="pure-button pure-button-primary">{{message }}</div>
         {% endfor %}
     {% endif %}
-Check the songs you want to send and the people you want to receive them.  Then hit send.
+Check the songs you want to send and the people you want to receive them.  Then hit send.<br>
+Did you want to send a teaching instead?<a href="/music/email/?file_type=3">Click here</a>
 {% if form %}
 <form method="post">
 {% csrf_token %}

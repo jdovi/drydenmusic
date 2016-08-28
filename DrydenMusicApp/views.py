@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.core.management import call_command
 from django.shortcuts import render, HttpResponseRedirect
 from .models import music
-from .forms import EmailForm, UploadForm, UserCreateForm
+from .forms import EmailForm, EmailTeachingForm, UploadForm, UserCreateForm
 import pdb
 
 # Create your views here.
@@ -47,9 +47,24 @@ def book_list(request):
     return render(request, 'DrydenMusicApp/book_list.html', context)
 
 @login_required    
+def teaching_list(request):
+    l = music.objects.filter(file_type=3)
+    l = l.order_by('date_presented')
+    context = {'teaching_list':l}
+    return render(request, 'DrydenMusicApp/teaching_list.html', context)
+
+@login_required    
 def email(request):
+    #check to see if a file_type parameter was passed in the query string
+    try:
+        email_type = int(request.GET.get('file_type',None))
+    except:
+        email_type = 1 #default to 1
     if request.method == 'POST':
-        form = EmailForm(request.POST)
+        if email_type != 3:
+            form = EmailForm(request.POST)
+        else:
+            form = EmailTeachingForm(request.POST)
         if form.is_valid():
             song_list = form.cleaned_data.get('song_list')
             email_list = form.cleaned_data.get('email_list')
@@ -60,8 +75,10 @@ def email(request):
                 messages.error(request, 'Email delivery failed.')
             return HttpResponseRedirect('/music/email/')
     else:
-        form = EmailForm
-
+        if email_type != 3:
+            form = EmailForm()
+        else:
+            form = EmailTeachingForm()
     return render(request, 'DrydenMusicApp/email_form.html', {'form':form })
         
 def logout(request):
@@ -101,8 +118,6 @@ def upload(request):
             except:
                 messages.error(request, 'There was and error uploading.')
             return HttpResponseRedirect('/music/upload/')
-        else:
-            status = 422 # signal error to UploadProgress
     else:
         form = UploadForm
 
