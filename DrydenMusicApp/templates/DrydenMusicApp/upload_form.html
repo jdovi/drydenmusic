@@ -9,7 +9,7 @@
     <br>
 Use the form below to upload a new song.
 {% if form %}
-<form action="/music/upload/" onsubmit="$("#form").uploadprogress({redirect_url: '/'});" method="post" enctype="multipart/form-data">
+<form id="upload" action="/music/upload/" onsubmit="$("#form").uploadprogress({redirect_url: '/'});" method="post" enctype="multipart/form-data">
 {% csrf_token %}
 <div class="pure-g">
   <div class="pure-u-1">
@@ -55,9 +55,23 @@ Use the form below to upload a new song.
     </table>
   </div>
 </div>
-<input type="submit" value="Submit" class="pure-button pure-button-primary" />
-
+<input id="btnStart" type="submit" value="Submit" class="pure-button pure-button-primary" />
+<div id='ajax_loader' class="popup" style="display: none;">Please wait while we upload your file...
+    <img src="https://s3.amazonaws.com/drydenmusic/img/loader.gif"></img>
+</div>
 </form>
+<script>
+         $(document).ajaxStart(function(){
+             console.debug("ajaxStart");
+             $("#ajax_loader").show();
+             document.getElementById("upload").submit();
+         });
+        $('#btnStart').click(function(e)  {
+            console.debug("click start");
+            jQuery.event.trigger("ajaxStart");
+            e.preventDefault();
+        });
+</script>
 {% else %}
     upload complete
 {% endif %}
