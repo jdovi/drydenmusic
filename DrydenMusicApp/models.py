@@ -28,3 +28,15 @@ class music(models.Model):
     author_or_teacher = models.CharField(blank=True, null=True, max_length=200)
     date_presented = models.DateField(blank=True,null=True)
     added = models.DateTimeField(auto_now_add=True)
+    
+class teaching_link(models.Model):
+    def __str__(self):
+        return self.title
+        
+    title = models.CharField(max_length=200)
+    url = models.CharField(max_length=200)
+    topic = models.CharField(blank=True, null=True, max_length=200)
+    scripture = models.CharField(blank=True, null=True, max_length=200)
+    author_or_teacher = models.CharField(blank=True, null=True, max_length=200)
+    date_presented = models.DateField(blank=True,null=True)
+    added = models.DateTimeField(auto_now_add=True)    

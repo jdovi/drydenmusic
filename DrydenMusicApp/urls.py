@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^teaching_list/', views.teaching_list, name='teaching_list'),
     url(r'^email/', views.email, name='email'),
     url(r'^upload/', views.upload, name='upload'),
+    url(r'^add_teaching_link/', views.add_teaching_link, name='add_teaching_link'),
 ]

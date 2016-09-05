@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import music
+from .models import music, teaching_link
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -29,7 +29,7 @@ class EmailTeachingForm(forms.Form):
     #this allows the choice fields to be dynamically populated.
     def __init__(self,*args, **kwargs):
         super(EmailTeachingForm, self).__init__(*args, **kwargs)
-        self.fields['song_list'].choices = [(x.pk, x.title) for x in music.objects.filter(file_type=3).order_by('date_presented')]
+        self.fields['song_list'].choices = [(x.pk, x.title) for x in teaching_link.objects.all().order_by('date_presented')]
         self.fields['email_list'].choices = [(x.email, x.email) for x in User.objects.order_by('email')]
 
 class UploadForm(ModelForm):
@@ -39,7 +39,14 @@ class UploadForm(ModelForm):
                     'first_line','topic','scripture',
                     'author_or_teacher','date_presented',
                 ]
-        
+
+class TeachingLinkForm(ModelForm):
+    class Meta:
+        model = teaching_link
+        fields = ['title','url',
+                    'topic','scripture',
+                    'author_or_teacher','date_presented',
+                ]
 class UserCreateForm(UserCreationForm):
     email = forms.EmailField(required=True)
 

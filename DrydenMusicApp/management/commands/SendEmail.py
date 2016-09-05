@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from drydenmusic.settings import EMAIL_PROVIDER
 from DrydenMusicApp.management.commands import SendEmail_Base
 
-from DrydenMusicApp.models import music
+from DrydenMusicApp.models import music, teaching_link
 import pdb
 
 #python manage.py   SendEmail     content_id    music_id_list                   Email address list
@@ -47,6 +47,25 @@ class Command(BaseCommand):
             context = {'link_list':link_list,
                         'headline':subject
                     }
+        
+        if content_id == 'email_teachings':
+            #make a list of dictionaries of the title / link that needs to be sent
+            link_list = []
+            for music_id in music_id_list:
+                for m in teaching_link.objects.filter(id=music_id):
+                    link_list.append({'title':m.title,'url':m.url})
+            
+            
+            #add the email addresses to the To line
+            to = to_email_list
+            
+            #create the subject line
+            subject = '%s New teaching is available' % list_count
+            
+            #create the context variable
+            context = {'link_list':link_list,
+                        'headline':subject
+                    }        
         
         elif content_id == 'email_registration':
             #add the email addresses to the To line

@@ -14,7 +14,7 @@
                 </thead>
             {% for music in teaching_list %}
                 <tr>
-                    <td><a href="{{ music.music_file.url }}">{{ music.title }}</a></td>
+                    <td><a target= "_blank" href="{{ music.url }}">{{ music.title }}</a></td>
                     <td>{{ music.date_presented }}</td>
                     <td>{{ music.author_or_teacher }}</td>
                     <td>{{ music.scripture }}</td>
@@ -22,6 +22,6 @@
             {% endfor %}
             </table>
         {% else %}
-            <p>No songs are available.</p>
+            <p>No teachings are available.</p>
         {% endif %}
 {% endblock %}

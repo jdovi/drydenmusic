@@ -1,0 +1,53 @@
+{% extends "DrydenMusicApp/base.html" %}
+{% block header %}Upload Files{% endblock %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="pure-button pure-button-primary">{{message }}</div>
+        {% endfor %}
+    {% endif %}
+    <br>
+Use the form below to upload a new song.
+{% if form %}
+<form id="upload" action="/music/add_teaching_link/" onsubmit="$("#form").uploadprogress({redirect_url: '/'});" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="pure-g">
+  <div class="pure-u-1">
+    <table class="pure-table pure-table-horizontal">
+
+        <tbody>
+    
+            <tr>
+                <td>{{ form.title.label_tag }}</td>
+                <td>{{ form.title }}{{ form.title.errors }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.url.label_tag }}</td>
+                <td>{{ form.url }}{{ form.url.errors }}</td>
+            </tr>
+
+            <tr>
+                <td>{{ form.topic.label_tag }}</td>
+                <td>{{ form.topic }}{{ form.topic.errors }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.scripture.label_tag }}</td>
+                <td>{{ form.scripture }}{{ form.scripture.errors }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.author_or_teacher.label_tag }}</td>
+                <td>{{ form.author_or_teacher }}{{ form.author_or_teacher.errors }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.date_presented.label_tag }}</td>
+                <td>{{ form.date_presented }}{{ form.date_presented.errors }}</td>
+            </tr>    
+    </tbody>
+    </table>
+  </div>
+</div>
+<input type="submit" value="Submit" class="pure-button pure-button-primary" />
+
+</form>
+{% endif %}
+{% endblock %}
