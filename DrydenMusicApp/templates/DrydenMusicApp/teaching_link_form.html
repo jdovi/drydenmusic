@@ -1,5 +1,5 @@
 {% extends "DrydenMusicApp/base.html" %}
-{% block header %}Upload Files{% endblock %}
+{% block header %}Add Teaching Links{% endblock %}
 {% block content %}
     {% if messages %}
         {% for message in messages %}
@@ -7,7 +7,7 @@
         {% endfor %}
     {% endif %}
     <br>
-Use the form below to upload a new song.
+Use the form below to add a link to a teaching.
 {% if form %}
 <form id="upload" action="/music/add_teaching_link/" onsubmit="$("#form").uploadprogress({redirect_url: '/'});" method="post" enctype="multipart/form-data">
 {% csrf_token %}
