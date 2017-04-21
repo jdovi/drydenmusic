@@ -16,7 +16,7 @@ class EmailForm(forms.Form):
     #this allows the choice fields to be dynamically populated.
     def __init__(self,*args, **kwargs):
         super(EmailForm, self).__init__(*args, **kwargs)
-        self.fields['song_list'].choices = [(x.pk, x.title) for x in music.objects.exclude(file_type=3).order_by('title')]
+        self.fields['song_list'].choices = [(x.pk, x.title) for x in music.objects.exclude(file_type=3).order_by('-added')]
         self.fields['email_list'].choices = [(x.email, x.email) for x in User.objects.order_by('email')]
 
 class EmailTeachingForm(forms.Form):

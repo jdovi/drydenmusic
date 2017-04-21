@@ -9,6 +9,7 @@
                     <tr>
                         <th onmouseover="" style="cursor: pointer;">Song Title</th>
                         <th onmouseover="" style="cursor: pointer;">First Line</th>
+                        <th onmouseover="" style="cursor: pointer;">Date Added</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -16,6 +17,7 @@
                     <tr>
                         <td><a href="{{ music.music_file.url }}">{{ music.title }}</a></td>
                         <td>{{ music.first_line }}</td>
+                        <td>{{ music.added }}</td>
                     </tr>
             {% endfor %}
             </tbody>
